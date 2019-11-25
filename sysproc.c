@@ -13,6 +13,13 @@ sys_fork(void)
   return fork();
 }
 
+
+int
+sys_cps ( void )
+{
+  return cps ();
+}
+
 int
 sys_exit(void)
 {
@@ -51,7 +58,8 @@ sys_sbrk(void)
   if(argint(0, &n) < 0)
     return -1;
   addr = myproc()->sz;
-myproc()->sz=myproc()->sz+n;	
+  if(growproc(n) < 0)
+    return -1;
   return addr;
 }
 
